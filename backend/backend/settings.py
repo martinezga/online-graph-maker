@@ -83,6 +83,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'graph': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME_DJANGO', default='postgres'),
+        'USER': config('DB_USER_DJANGO', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD_DJANGO', default='postgres'),
+        'HOST': config('DB_HOST_DJANGO', default='localhost'),
+        'PORT': config('DB_PORT_DJANGO', default='5432'),
     }
 }
 

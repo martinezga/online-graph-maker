@@ -20,3 +20,4 @@
 **/.env-*
 README.md
 db.sqlite3
+**/postgress/
