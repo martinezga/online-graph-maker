@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views import View
+from django.http.response import JsonResponse
 
-# Create your views here.
+
+class MyApiView(View):
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({'message': 'Hello, World!'})

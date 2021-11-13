@@ -45,6 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+INSTALLED_APPS += [
+    'api.apps.ApiConfig',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },
-    'graph': {
+    'graph_db': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME_DJANGO', default='postgres'),
         'USER': config('DB_USER_DJANGO', default='postgres'),
@@ -93,6 +97,13 @@ DATABASES = {
         'PORT': config('DB_PORT_DJANGO', default='5432'),
     }
 }
+
+# Database routers
+# https://docs.djangoproject.com/en/3.2/topics/db/multi-db/#database-routers
+
+DATABASE_ROUTERS = [
+    "backend.routers.MyRouter",
+]
 
 
 # Password validation
