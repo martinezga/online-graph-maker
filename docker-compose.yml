@@ -14,7 +14,6 @@ services:
       - db
     volumes:
       - ./backend/:/opt/app
-      #- ./backend/staticfiles/:/opt/app/staticfiles
     networks:
       - app_network
 
@@ -46,7 +45,3 @@ services:
 networks:
   app_network:
     driver: bridge
-
-volumes:
-    app:
-    db:
