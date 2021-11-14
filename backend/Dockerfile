@@ -10,15 +10,20 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /opt/app
 
-COPY requirements.txt entrypoint.sh /app/
+COPY requirements.txt init_app.sh ./
 
-COPY . /opt/app/
+COPY . .
 
 RUN apt-get -q -y update \
     && apt-get -q -y install nano \
     && pip install --upgrade pip \
-    && pip install -r requirements.txt
+    && pip install -r requirements.txt \
+    && chmod +x init_app.sh \
+    && ./init_app.sh
 
-#ENTRYPOINT ["sh", "/opt/app/entrypoint.sh"]
+# add and run as non-root user
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /opt/app
 
-CMD ["python","manage.py", "runserver", "0.0.0.0:8000"]
+USER appuser
+
+CMD gunicorn backend.wsgi --bind 0.0.0.0:$PORT
