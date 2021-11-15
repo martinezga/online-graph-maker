@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5nx%#k#3v@yo4clis2jmdp+h4cn$d!uue)wqh$ec@hn(1!2jyn'
+SECRET_KEY = config('SECRET_KEY_DJANGO', default='CHANGE_ME')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+ENVIRONMENT = config('ENVIRONMENT', default='')
 
-ALLOWED_HOSTS = ['*']
+if ENVIRONMENT == 'DEV':
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
+else:
+    DEBUG = False
+    ALLOWED_HOSTS = [config('ALLOWED_HOSTS_DJANGO', default='*')]
 
 
 # Application definition
@@ -39,8 +46,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+INSTALLED_APPS += [
+    'api.apps.ApiConfig',
+    'pages.apps.PagesConfig',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -54,7 +67,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,8 +90,23 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'graph_db': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME_DJANGO', default='postgres'),
+        'USER': config('DB_USER_DJANGO', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD_DJANGO', default='postgres'),
+        'HOST': config('DB_HOST_DJANGO', default='localhost'),
+        'PORT': config('DB_PORT_DJANGO', default='5432'),
     }
 }
+
+# Database routers
+# https://docs.djangoproject.com/en/3.2/topics/db/multi-db/#database-routers
+
+DATABASE_ROUTERS = [
+    "backend.routers.MyRouter",
+]
 
 
 # Password validation
@@ -118,8 +146,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'

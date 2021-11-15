@@ -10,15 +10,24 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /opt/app
 
-COPY requirements.txt entrypoint.sh /app/
+COPY requirements.txt entrypoint.sh ./
 
-COPY . /opt/app/
+COPY . .
 
 RUN apt-get -q -y update \
     && apt-get -q -y install nano \
     && pip install --upgrade pip \
-    && pip install -r requirements.txt
+    && pip install -r requirements.txt \
+    # gosu installation to switch to nonroot user in entrypoint.sh
+    && set -eux; \
+    apt-get install -y gosu; \
+    rm -rf /var/lib/apt/lists/*; \
+    # verify that the binary works
+    gosu nobody true
 
-#ENTRYPOINT ["sh", "/opt/app/entrypoint.sh"]
+# add and run as non-root user
+RUN adduser -u 5678 --disabled-password --gecos "" appuser 
 
-CMD ["python","manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["sh", "./entrypoint.sh"]
+
+CMD gunicorn backend.wsgi --bind 0.0.0.0:$PORT
