@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /opt/app
 
-COPY requirements.txt entrypoint.sh ./
+COPY requirements.txt entrypoint.sh /opt/app/
 
 COPY . .
 
