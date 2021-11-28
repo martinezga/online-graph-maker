@@ -17,18 +17,18 @@
   {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
 </head>
 
-<body>
+<body class="d-flex flex-column justify-content-between">
   <!-- Header -->
   <header class="p-3 mb-3 border-bottom">
     <div class="container">
       <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="{% url 'pages:home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="pencil-square"><use xlink:href="#pencil-square"></use></svg>
+        <a href="{% url 'pages:home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none">
+          <svg class="bi me-2 text-light" fill="currentColor" width="40" height="32" role="img" aria-label="pencil-square"><use xlink:href="#pencil-square"></use></svg>
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{% url 'pages:home' %}" class="nav-link px-2 link-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Dashboard</a></li>
+          <li><a href="{% url 'pages:home' %}" class="nav-link px-2 text-light">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-light">Dashboard</a></li>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -53,9 +53,10 @@
     </div>
   </header>
   <!-- END Header -->
-  <main>
-    {% block content %}
-    {% endblock %}
+  <main class="d-flex flex-column justify-content-between">
+    <div style="min-height: 75vmin!important;" class="d-flex align-items-center">
+      {% block content %}{% endblock %}
+    </div>
   </main>
   <!-- Footer -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -76,20 +77,20 @@
       <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
     </symbol>
   </svg>
-  <footer class="py-4 my-4 border-top">
+  <footer class="p-4 mt-4 border-top">
     <div class="container d-flex flex-row flex-wrap justify-content-between">
       <div class="d-flex">
         <a href="{% url 'pages:home' %}" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-          <svg class="bi" width="30" height="24"><use xlink:href="#pencil-square"></use></svg>
+          <svg class="bi text-light" fill="currentColor" width="30" height="24"><use xlink:href="#pencil-square"></use></svg>
         </a>
-        <span class="text-muted">Made with ❤️ by Gabriella Martínez</span>
+        <span class="text-light">Made with ❤️ by Gabriella Martínez</span>
       </div>
 
       <ul class="nav list-unstyled d-flex">
-        <li class="ms-3"><a class="text-muted" href="https://www.linkedin.com/in/gabriella-martinez-viloria/"><svg class="bi" width="24" height="24"><use xlink:href="#linkedin"></use></svg></a></li>
-        <li class="ms-3"><a class="text-muted" href="https://github.com/martinezga"><svg class="bi" width="24" height="24"><use xlink:href="#github"></use></svg></a></li>
-        <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/martinezgapro"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
-        <li class="ms-3"><a class="text-muted" href="https://twitter.com/martinezgapro"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+        <li class="ms-3"><a class="text-muted" href="https://www.linkedin.com/in/gabriella-martinez-viloria/"><svg class="bi text-light" fill="currentColor" width="24" height="24"><use xlink:href="#linkedin"></use></svg></a></li>
+        <li class="ms-3"><a class="text-muted" href="https://github.com/martinezga"><svg class="bi text-light" fill="currentColor" width="24" height="24"><use xlink:href="#github"></use></svg></a></li>
+        <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/martinezgapro"><svg class="bi text-light" fill="currentColor" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+        <li class="ms-3"><a class="text-muted" href="https://twitter.com/martinezgapro"><svg class="bi text-light" fill="currentColor" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
       </ul>
     </div>
   </footer>

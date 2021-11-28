@@ -4,36 +4,33 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <div class="container">
-    <!-- Content -->
-    <div class="content">
-      {% if not user.is_authenticated %}
-      <section class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
-        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-          <h1 class="display-4 fw-bold lh-1">Welcome 📈️</h1>
-          <p class="lead">Quickly create custom charts using a CSV file.</p>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-            <a href="https://google.com" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold"">Sign up</a>
-            <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg px-4"">Log in</a>
-          </div>
-        </div>
-        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-          <img class="rounded-lg-3" src="{% static 'pages/img/chartjs-example.png' %}" alt="chart js image" width="720">
-        </div>        
-      </section>
-      <!-- Another section -->
-      <section>
-      </section>
-      <!-- END Another section -->      
-      {% else %}
+<!-- Content -->
+<div class="container">
+  {% if not user.is_authenticated %}
+  <section class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+      <h1 class="display-4 fw-bold lh-1">Welcome 📈️</h1>
+      <p class="lead">Quickly create custom charts using a CSV file.</p>
       <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-        <a href="https://google.com" class="btn btn-primary px-4 me-md-2 fw-bold"">New dataset</a>
-        <a href="https://google.com" class="btn btn-primary px-4 me-md-2 fw-bold"">New chart</a>
-        {% block dashboard %}{% endblock %}
+        <a href="https://google.com" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold"">Sign up</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg px-4"">Log in</a>
       </div>
-      {% endif %}
     </div>
-    <!-- END Content -->
-
+    <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+      <img class="rounded-lg-3" src="{% static 'pages/img/chartjs-example.png' %}" alt="chart js image" width="720">
+    </div>        
+  </section>
+  <!-- Another section -->
+  <section>
+  </section>
+  <!-- END Another section -->      
+  {% else %}
+  <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+    <a href="https://google.com" class="btn btn-primary px-4 me-md-2 fw-bold"">New dataset</a>
+    <a href="https://google.com" class="btn btn-primary px-4 me-md-2 fw-bold"">New chart</a>
+    {% block dashboard %}{% endblock %}
   </div>
+  {% endif %}
+</div>
+<!-- END Content -->
 {% endblock %}
