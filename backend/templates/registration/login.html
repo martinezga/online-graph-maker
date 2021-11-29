@@ -1,14 +1,45 @@
 {% extends "base.html" %}
+{% load i18n static %}
 
 {% block title %}Login{% endblock %}
 
+{% block extrastyle %}
+  {{block.super}}
+  <link rel="stylesheet" href="{% static 'admin/css/login.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container d-flex justify-content-center">
-  <h2>Log In</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log In</button>
-  </form>
+<div class="container d-flex flex-column align-items-center justify-content-center shadow-lg" style="min-height: 50vmin;">
+  <div class="login">
+    {% if user.is_authenticated %}
+    <p class="errornote">
+    {% blocktranslate trimmed %}
+        You are authenticated as {{ user.username }}, but are not authorized to
+        access this page. Would you like to login to a different account?
+    {% endblocktranslate %}
+    </p>
+    {% endif %}
+    
+    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+      <div class="form-row">
+        {{ form.username.errors }}
+        {{ form.username.label_tag }} {{ form.username }}
+      </div>
+      <div class="form-row">
+        {{ form.password.errors }}
+        {{ form.password.label_tag }} {{ form.password }}
+        <input type="hidden" name="next" value="{{ next }}">
+      </div>
+      {% url 'admin_password_reset' as password_reset_url %}
+      {% if password_reset_url %}
+      <div class="password-reset-link">
+        <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+      </div>
+      {% endif %}
+      <div class="submit-row d-flex justify-content-center">
+        <input type="submit" class="btn btn-primary" value="{% translate 'Log in' %}">
+      </div>
+    </form>
+ </div>
 </div>
 {% endblock %}
