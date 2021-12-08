@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'api.apps.ApiConfig',
     'pages.apps.PagesConfig',
+    'file_validation.apps.FileValidationConfig',
 ]
 
 MIDDLEWARE = [
