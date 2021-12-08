@@ -37,3 +37,7 @@ Run console
 Create super user
 
         $ python manage.py createsuperuser
+
+Run psql cli
+
+        $ heroku pg:psql postgresql-name-373 -a onlinegraphmaker-dev

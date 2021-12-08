@@ -1,3 +1,15 @@
+from django.http.response import JsonResponse
+from django.views import View
 from django.shortcuts import render
 
-# Create your views here.
+
+class FileValidationMainView(View):
+    def __init__(self):
+        self.template_name = 'file_validation/file_validation.html'
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({'status': 'ok'})
+        # return render(
+        #     request,
+        #     self.template_name,
+        # )
