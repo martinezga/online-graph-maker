@@ -1,22 +1,29 @@
 {% extends "index.html" %}
 
 {% block dashboard %}
-
-{% if user.is_authenticated %}
-<form action="{% url 'file_validation:main' %}" method="POST" enctype="multipart/form-data" class="form-horizontal"> 
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
-        <div class="col-md-7">
-            <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
-        </div>                    
-    </div>
-    <div class="form-group">                    
-        <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3">
-             <button class="btn btn-primary my-3"> <span class="" style="margin-right:5px;"></span>Upload </button>
-        </div> 
-    </div>
-</form>
-{% endif %}
-
+<div class=" justify-content-center">
+    {% if user.is_authenticated %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="{% url 'file_validation:main' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+            <div class="col-md-12">
+                <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+            </div>                    
+        </div>
+        <div class="form-group">                    
+            <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3">
+                <button class="btn btn-primary my-3"> <span class="" style="margin-right:5px;"></span>Upload </button>
+            </div> 
+        </div>
+    </form>
+    {% endif %}
+</div>
 {% endblock %}
