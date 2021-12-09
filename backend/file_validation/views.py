@@ -8,8 +8,7 @@ class FileValidationMainView(View):
         self.template_name = 'file_validation/file_validation.html'
 
     def get(self, request, *args, **kwargs):
-        return JsonResponse({'status': 'ok'})
-        # return render(
-        #     request,
-        #     self.template_name,
-        # )
+        return render(
+            request,
+            self.template_name,
+        )
