@@ -1,5 +1,7 @@
 !/bin/sh
 
+heroku login
+heroku container:login
 cd backend/
 docker build -t registry.heroku.com/onlinegraphmaker-dev/web .
 docker push registry.heroku.com/onlinegraphmaker-dev/web
