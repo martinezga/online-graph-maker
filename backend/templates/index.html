@@ -26,7 +26,7 @@
   <!-- END Another section -->      
   {% else %}
   
-  <div class="dashboard d-flex">
+  <div class="dashboard d-flex justify-content-center">
     {% if request.path == '/' %}
     <a href="{% url 'file_validation:main' %}" class="btn btn-primary px-4 me-md-2 fw-bold m-3">New dataset</a>
     <a href="https://google.com" class="btn btn-primary px-4 me-md-2 fw-bold m-3">New chart</a>

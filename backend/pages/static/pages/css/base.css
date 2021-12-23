@@ -13,6 +13,21 @@ main > div > div.container {
     background: #f8f9fa;
 }
 
+ul.messages {
+    padding: 0;
+}
+
+ul.messages > li {
+    text-align: center;
+    list-style: none;
+    padding: 0.5rem 1rem;
+}
+
+ul.messages > li.error {
+    color: crimson;
+    border: crimson solid 1px;
+}
+
 footer {
     background: #A16AE8;
 }

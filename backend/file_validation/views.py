@@ -16,13 +16,19 @@ class FileValidationMainView(View):
     
     def post(self, request, *args, **kwargs):
         csv_file = request.FILES["csv_file"]
+        URL_file_validation_main = 'file_validation:main'
 
         if not csv_file.name.endswith('.csv'):
-            return JsonResponse({'status': 'no es un csv'})
+            messages.error(request, 'File is not CSV type')
+            return redirect(URL_file_validation_main)
 
         if csv_file.multiple_chunks():
-            return JsonResponse({'status': 'archivo demasiado grande'})
+            messages.error(request, f'Uploaded file is too big ({csv_file.size/(1000*1000)}.2f MB)')
+            return redirect(URL_file_validation_main)
 
-        return JsonResponse({'status': csv_file.name})
-        # messages.success(request, 'File uploaded successfully')
-        # return redirect('file_validation:main')
+        # TODO: Pre-process data in csv file
+        # TODO: Show pre-processed data in frontend to user
+        # TODO: Get user validation
+        # TODO: Save data to database
+        messages.success(request, f'File {csv_file.name} uploaded successfully')
+        return redirect(URL_file_validation_main)
