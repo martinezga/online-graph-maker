@@ -25,10 +25,26 @@ class FileValidationMainView(View):
         if csv_file.multiple_chunks():
             messages.error(request, f'Uploaded file is too big ({csv_file.size/(1000*1000)}.2f MB)')
             return redirect(URL_file_validation_main)
+        
+        # TODO: name file too long
+
+        from file_validation import file_manipulation
+        # TODO: Think about error handling
 
         # TODO: Pre-process data in csv file
+        pre_processed_data = file_manipulation.pre_process_data(csv_file)
         # TODO: Show pre-processed data in frontend to user
         # TODO: Get user validation
         # TODO: Save data to database
         messages.success(request, f'File {csv_file.name} uploaded successfully')
-        return redirect(URL_file_validation_main)
+        context = {
+            'display_csv': True,
+            'headers': pre_processed_data[0],
+            'data_type': pre_processed_data[1],
+            'data': pre_processed_data[2],
+        }
+        return render(
+            request,
+            self.template_name,
+            context
+        )
