@@ -11,3 +11,6 @@ services:
       - 80:8000
     volumes:
       - ./backend/:/opt/app
+
+volumes:
+  app:

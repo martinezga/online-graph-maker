@@ -12,8 +12,6 @@ WORKDIR /opt/app
 
 COPY requirements.txt entrypoint.sh /opt/app/
 
-COPY . .
-
 RUN apt-get -q -y update \
     && apt-get -q -y install nano \
     && pip install --upgrade pip \
@@ -24,6 +22,8 @@ RUN apt-get -q -y update \
     rm -rf /var/lib/apt/lists/*; \
     # verify that the binary works
     gosu nobody true
+
+COPY ./backend /opt/app
 
 # add and run as non-root user
 RUN adduser -u 5678 --disabled-password --gecos "" appuser 
