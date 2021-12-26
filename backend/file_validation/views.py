@@ -26,13 +26,14 @@ class FileValidationMainView(View):
             messages.error(request, f'Uploaded file is too big ({csv_file.size/(1000*1000)}.2f MB)')
             return redirect(URL_file_validation_main)
         
-        # TODO: name file too long
+        # TODO: error catching when file name is too long
 
-        from file_validation import file_manipulation
+        from file_validation.file_manipulation import FileManipulation
         # TODO: Think about error handling
 
         # TODO: Pre-process data in csv file
-        pre_processed_data = file_manipulation.pre_process_data(csv_file)
+        input_file = FileManipulation(csv_file)
+        pre_processed_data = input_file.pre_process_data()
         # TODO: Show pre-processed data in frontend to user
         # TODO: Get user validation
         # TODO: Save data to database
