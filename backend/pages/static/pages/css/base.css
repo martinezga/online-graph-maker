@@ -28,23 +28,6 @@ ul.messages > li.error {
     border: crimson solid 1px;
 }
 
-/* CSV Table properties*/
-th {
-    background-color: #D6EEEE;
-}
-
-th, td {
-    border-right: 1px solid #ddd;
-}
-
-tr {
-    border-bottom: 1px solid #ddd;
-}
-
-tr:hover {
-    background-color: #D6EEEE;
-}
-
 footer {
     background: #A16AE8;
 }

@@ -26,11 +26,13 @@
   <!-- END Another section -->      
   {% else %}
   
-  <div class="dashboard d-flex justify-content-center">
+  <div class="dashboard d-flex flex-column justify-content-center">
     {% if request.path == '/' %}
-    <a href="{% url 'file_validation:main' %}" class="btn btn-primary px-4 me-md-2 fw-bold m-3">New dataset</a>
-    <a href="https://google.com" class="btn btn-primary px-4 me-md-2 fw-bold m-3">New chart</a>
-    {% endif %}
+    <div class="d-flex flex-row">
+      <a href="{% url 'file_validation:main' %}" class="btn btn-primary px-4 me-md-2 fw-bold m-3">New dataset</a>
+      <a href="https://google.com" class="btn btn-primary px-4 me-md-2 fw-bold m-3">New chart</a>
+    </div>
+      {% endif %}
     {% block dashboard %}{% endblock %}
   </div>
   {% endif %}
