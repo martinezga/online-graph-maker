@@ -37,9 +37,13 @@
         </form>
 
         {% else %}
-        <h4>CSV preview</h4>
+        <div>
+          <h4>CSV preview</h4>
+          <div></div>
+        </div>
+        
         <br>
-        <table id="table" class="display dt-responsive nowrap">
+        <table id="table" class="display dt-responsive nowrap pt-2">
           <thead>
             <tr>
               {% for header in headers%}
@@ -47,17 +51,14 @@
               {% endfor %}
             </tr>
           </thead>
-          <tbody>
+          <tbody>          
+            {% for row in data %}
             <tr>
-              {% for type in data_type %}
-              <td class="px-2 py-1">{{ type }}</td>
+              {% for innerrow in row %}
+              <td class="px-2 py-1">{{ innerrow }}</td>
               {% endfor %}
             </tr>
-            <tr>
-              {% for row in data%}
-              <td class="px-2 py-1">{{row}}</td>
-              {% endfor %}
-            </tr>
+            {% endfor %}
           </tbody>
           </table>
         {% endif %}

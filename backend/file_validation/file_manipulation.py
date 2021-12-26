@@ -1,20 +1,33 @@
-import pandas as pd
 
 
 def lower_str(string):
     return string.lower()
 
 class FileManipulation:
-    def __init__(self, csv_file):
-        self.csv_file = csv_file
+    def __init__(self):
+        pass
 
-    def pre_process_data(self):
-        file_data = pd.read_csv(self.csv_file)
-        columns_name_list = []
-        data_type = ['integer', 'integer', 'integer', 'integer', 'integer','integer', 'integer', 'integer', 'integer', 'integer']
-        data = [10, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def pre_process_data(self, csv_file):
+        file_data = csv_file.read().decode("utf-8")
+        columns_name = []
+        data = []
 
-        columns_name_lower = map(lower_str, file_data.columns)
-        columns_name_list = list(columns_name_lower)
+        # TODO: Check if file has another line separator than \n
+        lines = file_data.split('\n')
 
-        return [columns_name_list, data_type, data]
+        columns_name = lines[0].split(',')
+        columns_name_lower = map(lower_str, columns_name)
+        columns_name = list(columns_name_lower)
+
+        # remove header
+        lines.pop(0)
+
+        for line in lines:
+            if line:
+                fields = line.split(',')
+                # TODO: Validate if there are empty fields because 
+                # it will cause error in datatable.net script
+                data.append(fields)
+        #sys.exit(f'file {filename}, line {reader.line_num}: {e}')
+
+        return [columns_name, data]

@@ -2,3 +2,7 @@
 th {
     background-color: #D6EEEE;
 }
+
+th, td {
+    border-right: 1px solid #ddd;
+}

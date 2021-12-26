@@ -32,8 +32,8 @@ class FileValidationMainView(View):
         # TODO: Think about error handling
 
         # TODO: Pre-process data in csv file
-        input_file = FileManipulation(csv_file)
-        pre_processed_data = input_file.pre_process_data()
+        input_file = FileManipulation()
+        pre_processed_data = input_file.pre_process_data(csv_file)
         # TODO: Show pre-processed data in frontend to user
         # TODO: Get user validation
         # TODO: Save data to database
@@ -41,8 +41,7 @@ class FileValidationMainView(View):
         context = {
             'display_csv': True,
             'headers': pre_processed_data[0],
-            'data_type': pre_processed_data[1],
-            'data': pre_processed_data[2],
+            'data': pre_processed_data[1],
         }
         return render(
             request,
