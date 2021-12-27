@@ -2,7 +2,7 @@
 
 {% block filevalidation %}
 
-{% if not display_csv %}
+{% if not is_csv_display %}
 <form action="{% url 'file_validation:main' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
     {% csrf_token %}
     <div class="form-group">
@@ -23,10 +23,10 @@
   <h4>CSV preview</h4>
   <form action="{% url 'file_validation:data_type' %}" method="POST" class="d-flex justify-content-center">
     {% csrf_token %}
-    <input type="hidden" name="csv_headers" id="csv_headers" required="True" value="{{ headers }}">
-    <input type="hidden" name="csv_data" id="csv_data" required="True" value="{{ data }}">
+    <input type="hidden" name="csv_headers_list" id="csv_headers_list" required="True" value="{{ headers }}">
+    <input type="hidden" name="csv_data_list" id="csv_data_list" required="True" value="{{ data }}">
     <button class="btn btn-primary my-2"> <span style="margin-right:5px;"></span>Select the data type for each column </button>
-</form>
+  </form>
 </div>
 
 <br>

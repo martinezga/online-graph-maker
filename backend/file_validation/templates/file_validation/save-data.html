@@ -2,6 +2,19 @@
 
 {% block filevalidation %}
 
-<div>test</div>
+{% if not is_save_data %}
+<div>{{ csv_headers }}</div>
+
+<form action="{% url 'file_validation:save_data' %}" method="POST" class="d-flex justify-content-center">
+    {% csrf_token %}
+    <input type="hidden" name="csv_headers_list" id="csv_headers_list" required="True" value="{{ headers }}">
+    <input type="hidden" name="csv_data_list" id="csv_data_list" required="True" value="{{ data }}">
+    <button class="btn btn-primary my-2"> <span style="margin-right:5px;"></span>Save dataset </button>
+</form>
+    
+{% else %}
+<div>{{ status }}</div>
+
+{% endif %}
 
 {% endblock filevalidation %}

@@ -36,7 +36,7 @@ class FileValidationMainView(View):
 
         messages.success(request, f'File {csv_file.name} uploaded successfully')
         context = {
-            'display_csv': True,
+            'is_csv_display': True,
             'headers': pre_processed_data[0],
             'data': pre_processed_data[1],
         }
@@ -57,7 +57,38 @@ class FileValidationDataTypeView(View):
         )
     
     def post(self, request, *args, **kwargs):
+        csv_headers = request.POST['csv_headers_list']
+        csv_data = request.POST['csv_data_list']
+
+        context = {
+            'csv_headers': csv_headers,
+        }
+
         return render(
             request,
             self.template_name,
+            context
+        )
+
+class FileValidationSaveDataView(View):
+    def __init__(self):
+        self.template_name = 'file_validation/save-data.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
+        )
+    
+    def post(self, request, *args, **kwargs):
+
+        context = {
+            'is_save_data': True,
+            'status': 200,
+        }
+        # TODO: Return to main page showing user's dataset list
+        return render(
+            request,
+            self.template_name,
+            context
         )
