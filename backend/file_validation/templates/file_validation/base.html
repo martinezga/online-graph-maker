@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% load i18n static %}
+
+{% block extrahead %}
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'file_validation/css/styles.css' %}">
+<script type="text/javascript" charset="utf8" src="{% static 'file_validation/js/main.js' %}"></script>
+{% endblock extrahead %}
+
+{% block dashboard %}
+<div class="justify-content-center my-3">
+    {% if user.is_authenticated %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block filevalidation %}{% endblock filevalidation %}
+
+    {% endif %}
+</div>
+{% endblock dashboard %}

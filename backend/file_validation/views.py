@@ -6,7 +6,7 @@ from django.contrib import messages
 
 class FileValidationMainView(View):
     def __init__(self):
-        self.template_name = 'file_validation/file_validation.html'
+        self.template_name = 'file_validation/preview-data.html'
 
     def get(self, request, *args, **kwargs):
         return render(
@@ -31,12 +31,9 @@ class FileValidationMainView(View):
         from file_validation.file_manipulation import FileManipulation
         # TODO: Think about error handling
 
-        # TODO: Pre-process data in csv file
         input_file = FileManipulation()
         pre_processed_data = input_file.pre_process_data(csv_file)
-        # TODO: Show pre-processed data in frontend to user
-        # TODO: Get user validation
-        # TODO: Save data to database
+
         messages.success(request, f'File {csv_file.name} uploaded successfully')
         context = {
             'display_csv': True,
@@ -47,4 +44,20 @@ class FileValidationMainView(View):
             request,
             self.template_name,
             context
+        )
+
+class FileValidationDataTypeView(View):
+    def __init__(self):
+        self.template_name = 'file_validation/save-data.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
+        )
+    
+    def post(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
         )
