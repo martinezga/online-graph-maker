@@ -23,7 +23,7 @@ RUN apt-get -q -y update \
     # verify that the binary works
     gosu nobody true
 
-ADD ./backend /opt/app
+ADD . /opt/app
 
 # add and run as non-root user
 RUN adduser -u 5678 --disabled-password --gecos "" appuser 
