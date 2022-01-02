@@ -1,3 +1,4 @@
+import json
 
 
 def lower_str(string):
@@ -11,6 +12,7 @@ class FileManipulation:
         file_data = csv_file.read().decode("utf-8")
         columns_name = []
         data = []
+        output_data = {}
 
         # TODO: Check if file has another line separator than \n
         lines = file_data.split('\n')
@@ -30,4 +32,9 @@ class FileManipulation:
                 data.append(fields)
         #sys.exit(f'file {filename}, line {reader.line_num}: {e}')
 
-        return [columns_name, data]
+        output_data['dataset_name'] = csv_file.name
+        output_data['headers'] = columns_name
+        output_data['data'] = data
+        output_data = json.dumps(output_data)
+
+        return [columns_name, data, output_data]

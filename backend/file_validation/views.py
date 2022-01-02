@@ -2,6 +2,7 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.http.response import JsonResponse
 from django.contrib import messages
+import json
 
 
 class FileValidationMainView(View):
@@ -39,6 +40,7 @@ class FileValidationMainView(View):
             'is_csv_display': True,
             'headers': pre_processed_data[0],
             'data': pre_processed_data[1],
+            'output_data': pre_processed_data[2],
         }
         return render(
             request,
@@ -57,11 +59,27 @@ class FileValidationDataTypeView(View):
         )
     
     def post(self, request, *args, **kwargs):
-        csv_headers = request.POST['csv_headers_list']
-        csv_data = request.POST['csv_data_list']
+        csv_data = request.POST['csv_data']
+        csv_data = json.loads(csv_data)
+        data_headers = csv_data.get('headers')
+        data_types_options = [
+            'string',
+            'integer',
+            'float',
+            'boolean',
+            'date',
+            'datetime',
+            'time',
+        ]
+
+        max_id = len(data_headers)
+        headers_id = [f'header{number}' for number in range(max_id)]
+        data_tuple_headers = list(zip(headers_id, data_headers))
 
         context = {
-            'csv_headers': csv_headers,
+            'csv_data': csv_data,
+            'data_tuple_headers': data_tuple_headers,
+            'data_types_options': data_types_options,
         }
 
         return render(

@@ -3,14 +3,31 @@
 {% block filevalidation %}
 
 {% if not is_save_data %}
-<div>{{ csv_headers }}</div>
 
-<form action="{% url 'file_validation:save_data' %}" method="POST" class="d-flex justify-content-center">
+<h4>Select column data type</h4>
+<form action="{% url 'file_validation:save_data' %}" method="POST" class="d-flex flex-column justify-content-center mx-auto w-50">
     {% csrf_token %}
-    <input type="hidden" name="csv_headers_list" id="csv_headers_list" required="True" value="{{ headers }}">
-    <input type="hidden" name="csv_data_list" id="csv_data_list" required="True" value="{{ data }}">
-    <button class="btn btn-primary my-2"> <span style="margin-right:5px;"></span>Save dataset </button>
+    <div class="form-group row">
+        <div class="py-1 text-center col"><strong>Column title</strong></div>
+        <div class="p-1 text-center col"><strong>Data type</strong></div>
+    </div>
+    {% for header in data_tuple_headers %}
+    <div class="form-group row">
+        <label for="{{ header.0 }}" class="py-1 col">{{ header.1 }}:</label>
+        <select type="text" id="{{ header.0 }}" name="{{ header.0 }}" class="p-1 col">
+            {% for option in data_types_options %}
+            <option>{{ option }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {% endfor %}
+    <br>
+    <div class="form-group d-flex justify-content-center">
+        <button class="btn btn-primary my-2"> <span style="margin-right:5px;"></span>Save dataset </button>
+    </div>
 </form>
+
+<div>{{ data_types }}</div>
     
 {% else %}
 <div>{{ status }}</div>
