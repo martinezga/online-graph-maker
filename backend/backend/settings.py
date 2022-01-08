@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
+    'rest_framework',
     'api.apps.ApiConfig',
     'pages.apps.PagesConfig',
     'file_validation.apps.FileValidationConfig',
@@ -181,3 +182,8 @@ LOGOUT_REDIRECT_URL = 'pages:home'
 # ]
 
 # FILE_UPLOAD_MAX_MEMORY_SIZE = 
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

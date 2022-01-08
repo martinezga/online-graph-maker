@@ -112,7 +112,7 @@ class FileValidationSaveDataView(View):
 
         from file_validation.file_manipulation import FileManipulation
 
-        response_dict = FileManipulation().save_data(csv_data)
+        #response_dict = FileManipulation().save_data(csv_data)
 
         context = {
             'is_save_data': True,
