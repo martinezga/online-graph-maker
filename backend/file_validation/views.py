@@ -32,8 +32,7 @@ class FileValidationMainView(View):
         from file_validation.file_manipulation import FileManipulation
         # TODO: Think about error handling
 
-        input_file = FileManipulation()
-        pre_processed_data = input_file.pre_process_data(csv_file)
+        pre_processed_data = FileManipulation().pre_process_data(csv_file)
 
         messages.success(request, f'File {csv_file.name} uploaded successfully')
         context = {
@@ -70,9 +69,10 @@ class FileValidationDataTypeView(View):
             'date',
             'datetime',
             'time',
+            'timestamp',
         ]
 
-        max_id = len(data_headers)
+        max_id = csv_data.get('headers_count')
         headers_id = [f'header{number}' for number in range(max_id)]
         data_tuple_headers = list(zip(headers_id, data_headers))
 
@@ -99,6 +99,19 @@ class FileValidationSaveDataView(View):
         )
     
     def post(self, request, *args, **kwargs):
+        csv_data = request.POST['csv_data']
+        csv_data = json.loads(csv_data)
+        data_tuple_headers = request.POST['data_tuple_headers']
+        data_tuple_headers = json.loads(data_tuple_headers)
+        csv_data['headers_and_types'] = []
+
+        for header_id, header_name in data_tuple_headers:
+            header_type = request.POST[header_id]
+            csv_data['headers_and_types'].append((header_name, header_type))
+
+        from file_validation.file_manipulation import FileManipulation
+
+        response_dict = FileManipulation().save_data(csv_data)
 
         context = {
             'is_save_data': True,
