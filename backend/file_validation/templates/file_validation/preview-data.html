@@ -1,0 +1,52 @@
+{% extends "file_validation/base.html" %}
+
+{% block filevalidation %}
+
+{% if not is_csv_display %}
+<form action="{% url 'file_validation:main' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+        <div class="col-md-12">
+            <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+        </div>                    
+    </div>
+    <div class="form-group">                    
+        <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3">
+            <button class="btn btn-primary my-3"> <span style="margin-right:5px;"></span>Upload </button>
+        </div> 
+    </div>
+</form>
+
+{% else %}
+<div>
+  <h4>CSV preview</h4>
+  <form action="{% url 'file_validation:data_type' %}" method="POST" class="d-flex justify-content-center">
+    {% csrf_token %}
+    <input type="hidden" name="csv_data" id="csv_data" required="True" value="{{ output_data }}">
+    <button class="btn btn-primary my-2"> <span style="margin-right:5px;"></span>Select the data type for each column </button>
+  </form>
+</div>
+
+<br>
+<table id="table" class="display dt-responsive nowrap pt-2">
+  <thead>
+    <tr>
+      {% for header in headers%}
+      <th class="px-2 py-1">{{ header }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>          
+    {% for row in data %}
+    <tr>
+      {% for innerrow in row %}
+      <td class="px-2 py-1">{{ innerrow }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+{% endif %}
+
+{% endblock filevalidation %}

@@ -15,11 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from pages.apps import PagesConfig
+from api.apps import ApiConfig
+from file_validation.apps import FileValidationConfig
 
 
 urlpatterns = [
-    path('', include('pages.urls')),
+    path('', include('pages.urls', namespace=PagesConfig.name)),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('api/v1/', include('api.urls')),
+    path('api/v1/', include('api.urls', namespace=ApiConfig.name)),
+    path('upload-file/', include('file_validation.urls', namespace=FileValidationConfig.name)),
 ]

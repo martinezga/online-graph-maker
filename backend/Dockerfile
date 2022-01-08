@@ -10,9 +10,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /opt/app
 
-COPY requirements.txt entrypoint.sh /opt/app/
-
-COPY . .
+ADD requirements.txt entrypoint.sh /opt/app/
 
 RUN apt-get -q -y update \
     && apt-get -q -y install nano \
@@ -24,6 +22,8 @@ RUN apt-get -q -y update \
     rm -rf /var/lib/apt/lists/*; \
     # verify that the binary works
     gosu nobody true
+
+ADD . /opt/app
 
 # add and run as non-root user
 RUN adduser -u 5678 --disabled-password --gecos "" appuser 

@@ -25,9 +25,10 @@ if $COLLECSTATICS = true; then
      }
 fi
 
-chown -R appuser /opt/app
+# heroku doesn't switch to appuser. TODO: fix this.
+#chown -R appuser /opt/app
 
 # Now run everything else as a non-root user
-gosu appuser /bin/bash
+#gosu appuser /bin/sh
 
 exec "$@"

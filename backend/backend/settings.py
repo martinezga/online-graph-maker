@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'api.apps.ApiConfig',
     'pages.apps.PagesConfig',
+    'file_validation.apps.FileValidationConfig',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +103,18 @@ DATABASES = {
         'PORT': config('DB_PORT_DJANGO', default='5432'),
     }
 }
+
+# Heroku Postgres databases
+DATABASE_URL_DJANGO = config('DATABASE_URL', default='')
+if DATABASE_URL_DJANGO:
+    db_from_env_django = dj_database_url.config(default=DATABASE_URL_DJANGO, conn_max_age=600, ssl_require=True)
+    DATABASES['default'].update(db_from_env_django)
+
+DATABASE_URL_GRAPH = config('HEROKU_POSTGRESQL_PINK_URL', default='')
+if DATABASE_URL_GRAPH:
+    db_from_env_graph = dj_database_url.config(default=DATABASE_URL_GRAPH, conn_max_age=600, ssl_require=True)
+    DATABASES['graph_db'].update(db_from_env_graph)
+
 
 # Database routers
 # https://docs.djangoproject.com/en/3.2/topics/db/multi-db/#database-routers
@@ -155,5 +170,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'pages:home'
+LOGOUT_REDIRECT_URL = 'pages:home'
+
+
+# Are necessary?
+# FILE_UPLOAD_HANDLERS = [
+#     'django.core.files.uploadhandler.MemoryFileUploadHandler',
+#     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+# ]
+
+# FILE_UPLOAD_MAX_MEMORY_SIZE = 
