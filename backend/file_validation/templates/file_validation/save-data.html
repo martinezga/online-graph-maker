@@ -5,16 +5,18 @@
 {% if not is_save_data %}
 
 <h4>Select column data type</h4>
-<form action="{% url 'file_validation:save_data' %}" method="POST" class="d-flex flex-column justify-content-center mx-auto w-50">
+<form action="{% url 'file_validation:save_data' %}" method="POST" class="d-flex flex-column justify-content-center mx-auto w-75">
     {% csrf_token %}
     <div class="form-group row">
-        <div class="py-1 text-center col"><strong>Column title</strong></div>
-        <div class="p-1 text-center col"><strong>Data type</strong></div>
+        <div class="p-1 text-center col-sm-4"><strong>Column title</strong></div>
+        <div class="p-1 text-center col-sm-5"><strong>First row</strong></div>
+        <div class="p-1 text-center col-sm-2"><strong>Data type</strong></div>
     </div>
     {% for header in data_tuple_headers %}
     <div class="form-group row">
-        <label for="{{ header.0 }}" class="py-1 col">{{ header.1 }}:</label>
-        <select type="text" id="{{ header.0 }}" name="{{ header.0 }}" class="p-1 col">
+        <label for="{{ header.0 }}" class="p-1 col-sm-4 dataset-column-type">{{ header.1 }}:</label>
+        <div class="p-1 col-sm-5 dataset-column-type">{{ header.2 }}</div>
+        <select type="text" id="{{ header.0 }}" name="{{ header.0 }}" class="p-1 col-sm-2">
             {% for option in data_types_options %}
             <option>{{ option }}</option>
             {% endfor %}
