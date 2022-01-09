@@ -1,3 +1,7 @@
+# cross-database relations are not possible to recreate in Django
+# https://docs.djangoproject.com/en/2.2/topics/db/multi-db/#cross-database-relations
+
+### Not used ###
 
 
 class MyRouter(object):
