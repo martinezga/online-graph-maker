@@ -9,12 +9,12 @@ router = routers.DefaultRouter()
 # example: /api/v1/users/
 router.register(r'users', views.UserViewSet)
 # example: /api/v1/datasets/
-router.register(r'datasets', views.UserViewSet)
+#router.register(r'datasets', views.DatasetList, basename='dataset-list')
 
 
 app_name = ApiConfig.name
 urlpatterns = [
     # example: /api/v1/
-    path('', views.MyApiView.as_view(), name='api-index'),
     path('', include(router.urls)),
+    path('datasets/', views.DatasetList.as_view()),
 ]
