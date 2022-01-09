@@ -26,8 +26,8 @@ Open app
 Django initializations
 
         $ heroku run python manage.py collectstatic --no-input --clear -a onlinegraphmaker-dev
-        $ heroku run python manage.py makemigrations -a onlinegraphmaker-dev
         $ heroku run python manage.py migrate -a onlinegraphmaker-dev
+        $ heroku run python manage.py migrate --database=graph_db -a onlinegraphmaker-dev
 
 Run console
 

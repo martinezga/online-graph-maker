@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Dataset(models.Model):
-    user_id = ForeignKey(User)
+    user_id = ForeignKey(User, on_delete=models.CASCADE)
     filename = models.CharField(max_length=128)
     content_json = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -14,4 +14,5 @@ class Dataset(models.Model):
     deleted_by = models.CharField(max_length=150, blank=True, default='')
 
     class Meta:
+        app_label = 'api'
         verbose_name_plural = 'datasets'

@@ -22,32 +22,21 @@ class MyRouter(object):
     def allow_relation(self, obj1, obj2, **hints):
         """Determine if relationship is allowed between two objects."""
 
-        # Allow any relation between two models.
-        if obj1._meta.app_label in self.route_app_labels and \
-            obj2._meta.app_label in self.route_app_labels:
-
-            return True
-
-        # No opinion if neither object is in the allowed app (defer to default or other routers).
-        elif self.route_app_labels not in [obj1._meta.app_label, obj2._meta.app_label]:
-
-            return None
-
-        # Block relationship if one object is in the allowed app and the other isn't.
-        return False
+        return True
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         """
         Ensure that the api app's models get created on the right database.
         """
-        if app_label in self.route_app_labels:
+        if db == 'graph_db':
             # The allowed app should be migrated only on the graph_db database.
-
-            return db == 'graph_db'
-
-        elif db == 'graph_db':
-            # Ensure that all other apps don't get migrated on the graph_db database.
-
+            if app_label in self.route_app_labels:
+                return True            
+            else:
+                # Ensure that all other apps don't get migrated on the graph_db database.
+                return False
+        # Other database should not migrate graph_db app models            
+        elif app_label in self.route_app_labels:
             return False
-
-        return True
+        # Otherwise no opinion, defer to other routers or default database
+        return None

@@ -97,10 +97,10 @@ DATABASES = {
     },
     'graph_db': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME_DJANGO', default='postgres'),
-        'USER': config('DB_USER_DJANGO', default='postgres'),
-        'PASSWORD': config('DB_PASSWORD_DJANGO', default='postgres'),
-        'HOST': config('DB_HOST_DJANGO', default='localhost'),
+        'NAME': config('DB_NAME_DJANGO', default=''),
+        'USER': config('DB_USER_DJANGO', default=''),
+        'PASSWORD': config('DB_PASSWORD_DJANGO', default=''),
+        'HOST': config('DB_HOST_DJANGO', default=''),
         'PORT': config('DB_PORT_DJANGO', default='5432'),
     }
 }
@@ -108,12 +108,12 @@ DATABASES = {
 # Heroku Postgres databases
 DATABASE_URL_DJANGO = config('DATABASE_URL', default='')
 if DATABASE_URL_DJANGO:
-    db_from_env_django = dj_database_url.config(default=DATABASE_URL_DJANGO, conn_max_age=600, ssl_require=True)
+    db_from_env_django = dj_database_url.parse(DATABASE_URL_DJANGO, conn_max_age=600, ssl_require=True)
     DATABASES['default'].update(db_from_env_django)
 
 DATABASE_URL_GRAPH = config('HEROKU_POSTGRESQL_PINK_URL', default='')
 if DATABASE_URL_GRAPH:
-    db_from_env_graph = dj_database_url.config(default=DATABASE_URL_GRAPH, conn_max_age=600, ssl_require=True)
+    db_from_env_graph = dj_database_url.parse(DATABASE_URL_GRAPH, conn_max_age=600, ssl_require=True)
     DATABASES['graph_db'].update(db_from_env_graph)
 
 
