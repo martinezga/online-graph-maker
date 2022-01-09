@@ -14,7 +14,6 @@ First time running heroku-deploy script:
 
 To deploy using Heroku Container Registry service (deploy pre-built Docker images):
 
-        $ heroku container:login
         $ ./heroku-deploy.sh
 
 
