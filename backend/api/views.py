@@ -15,10 +15,11 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class DatasetList(APIView):
+class DatasetViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows datasets to be viewed or edited.
+    """
+    queryset = models.Dataset.objects.all()
+    serializer_class = serializers.DatasetSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, format=None):
-        datasets = models.Dataset.objects.all()
-        serializer = serializers.DatasetSerializer(datasets, many=True)
-
-        return Response(serializer.data)
