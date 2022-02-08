@@ -26,4 +26,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('api/v1/', include('api.urls', namespace=ApiConfig.name)),
     path('upload-file/', include('file_validation.urls', namespace=FileValidationConfig.name)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

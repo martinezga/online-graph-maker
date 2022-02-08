@@ -7,6 +7,12 @@ Quickly create custom charts using a CSV file.
 
 https://onlinegraphmaker-dev.herokuapp.com/
 
+
+## Credentials to login and test the app:
+	user: test
+	password: 2021test-
+
+
 First time running heroku-deploy script:
 
         $ chmod +x heroku-deploy.sh
@@ -14,7 +20,6 @@ First time running heroku-deploy script:
 
 To deploy using Heroku Container Registry service (deploy pre-built Docker images):
 
-        $ heroku container:login
         $ ./heroku-deploy.sh
 
 
@@ -27,7 +32,6 @@ Open app
 Django initializations
 
         $ heroku run python manage.py collectstatic --no-input --clear -a onlinegraphmaker-dev
-        $ heroku run python manage.py makemigrations -a onlinegraphmaker-dev
         $ heroku run python manage.py migrate -a onlinegraphmaker-dev
 
 Run console

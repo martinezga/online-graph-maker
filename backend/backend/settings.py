@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
+    'rest_framework',
     'api.apps.ApiConfig',
     'pages.apps.PagesConfig',
     'file_validation.apps.FileValidationConfig',
@@ -91,15 +92,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'graph_db': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME_DJANGO', default='postgres'),
-        'USER': config('DB_USER_DJANGO', default='postgres'),
-        'PASSWORD': config('DB_PASSWORD_DJANGO', default='postgres'),
-        'HOST': config('DB_HOST_DJANGO', default='localhost'),
+        'NAME': config('DB_NAME_DJANGO', default=''),
+        'USER': config('DB_USER_DJANGO', default=''),
+        'PASSWORD': config('DB_PASSWORD_DJANGO', default=''),
+        'HOST': config('DB_HOST_DJANGO', default=''),
         'PORT': config('DB_PORT_DJANGO', default='5432'),
     }
 }
@@ -107,21 +104,8 @@ DATABASES = {
 # Heroku Postgres databases
 DATABASE_URL_DJANGO = config('DATABASE_URL', default='')
 if DATABASE_URL_DJANGO:
-    db_from_env_django = dj_database_url.config(default=DATABASE_URL_DJANGO, conn_max_age=600, ssl_require=True)
+    db_from_env_django = dj_database_url.parse(DATABASE_URL_DJANGO, conn_max_age=600, ssl_require=True)
     DATABASES['default'].update(db_from_env_django)
-
-DATABASE_URL_GRAPH = config('HEROKU_POSTGRESQL_PINK_URL', default='')
-if DATABASE_URL_GRAPH:
-    db_from_env_graph = dj_database_url.config(default=DATABASE_URL_GRAPH, conn_max_age=600, ssl_require=True)
-    DATABASES['graph_db'].update(db_from_env_graph)
-
-
-# Database routers
-# https://docs.djangoproject.com/en/3.2/topics/db/multi-db/#database-routers
-
-DATABASE_ROUTERS = [
-    "backend.routers.MyRouter",
-]
 
 
 # Password validation
@@ -181,3 +165,8 @@ LOGOUT_REDIRECT_URL = 'pages:home'
 # ]
 
 # FILE_UPLOAD_MAX_MEMORY_SIZE = 
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

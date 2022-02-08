@@ -6,3 +6,9 @@ th {
 th, td {
     border-right: 1px solid #ddd;
 }
+
+@media all and (min-width: 576px) {
+    .dataset-column-type {
+        border-bottom: 1px solid #ddd;
+    }
+}

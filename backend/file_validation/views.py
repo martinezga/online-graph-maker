@@ -61,6 +61,7 @@ class FileValidationDataTypeView(View):
         csv_data = request.POST['csv_data']
         csv_data = json.loads(csv_data)
         data_headers = csv_data.get('headers')
+        first_row = csv_data.get('data')[0]
         data_types_options = [
             'string',
             'integer',
@@ -74,7 +75,7 @@ class FileValidationDataTypeView(View):
 
         max_id = csv_data.get('headers_count')
         headers_id = [f'header{number}' for number in range(max_id)]
-        data_tuple_headers = list(zip(headers_id, data_headers))
+        data_tuple_headers = list(zip(headers_id, data_headers, first_row))
 
         context = {
             'csv_data': csv_data,
@@ -111,7 +112,7 @@ class FileValidationSaveDataView(View):
 
         from file_validation.file_manipulation import FileManipulation
 
-        response_dict = FileManipulation().save_data(csv_data)
+        #response_dict = FileManipulation().save_data(csv_data)
 
         context = {
             'is_save_data': True,
