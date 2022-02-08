@@ -7,6 +7,12 @@ Quickly create custom charts using a CSV file.
 
 https://onlinegraphmaker-dev.herokuapp.com/
 
+
+## Credentials to login and test the app:
+	user: test
+	password: 2021test-
+
+
 First time running heroku-deploy script:
 
         $ chmod +x heroku-deploy.sh
