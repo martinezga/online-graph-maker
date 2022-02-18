@@ -1,0 +1,37 @@
+name: CI/CD Docker Django Heroku
+
+on:
+  push:
+    branches: [ development ]
+
+# Set environment variables
+env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  APP_NAME_DEV: ${{ secrets.APP_NAME_DEV }}
+
+jobs:
+  formatting:
+    runs-on: ubuntu-latest
+    steps:
+      # Clone the repository
+      - uses: actions/checkout@v2
+      # TODO: Add run: for
+      # flake8 for linting,
+      # black for formatting the code,
+      # isort for formatting and sorting imports
+      # pre-commit for checking/fixing commits for correctness before they are made public
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Clone the repository
+      - uses: actions/checkout@v2
+      # Logging in to Heroku Container Registry
+      - name: Registry login
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+      # Build the image and push it
+      - name: Build and publish
+        run: |
+          cd backend
+          heroku container:push web -a $APP_NAME_DEV
+          heroku container:release web -a $APP_NAME_DEV
