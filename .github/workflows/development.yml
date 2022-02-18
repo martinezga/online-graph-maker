@@ -7,7 +7,7 @@ on:
 # Set environment variables
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  APP_NAME_DEV: ${{ onlinegraphmaker-dev }}
+  APP_NAME_DEV: ${{ 'onlinegraphmaker-dev' }}
 
 jobs:
   formatting:
