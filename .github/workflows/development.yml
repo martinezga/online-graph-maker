@@ -7,7 +7,7 @@ on:
 # Set environment variables
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  APP_NAME_DEV: ${{ 'onlinegraphmaker-dev' }}
+  APP_NAME_DEV: ${{ secrets.APP_NAME_DEV }}
 
 jobs:
   formatting:
@@ -32,5 +32,6 @@ jobs:
       # Build the image and push it
       - name: Build and publish
         run: |
+          cd backend
           heroku container:push web -a $APP_NAME_DEV
           heroku container:release web -a $APP_NAME_DEV
